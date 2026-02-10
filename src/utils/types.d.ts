@@ -1,6 +1,6 @@
 export interface SWContextInterface {
-    page: string,
-    changePage: (page: string) => void,
+    hero: string,
+    changeHero: (hero: string) => void,
     // [key: string]: unknown,
 }
 
@@ -18,4 +18,18 @@ export interface HeroInfo {
 export interface PlanetsStore {
     payload: Array<string>,
     time: number
+}
+
+export interface NavItemInterface {
+    title: string,
+    path: string
+}
+
+export interface HeroInterface {
+    name: string,
+    img: string,
+    url: string
+}
+export interface CharactersInterface {
+    [key: string]: HeroInterface
 }

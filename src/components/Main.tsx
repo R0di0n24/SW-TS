@@ -4,15 +4,21 @@ import StarWars from "./StarWars.tsx";
 import Contact from "./Contact.tsx";
 import {Route, Routes} from "react-router-dom";
 import {navItems} from "../utils/constants.ts";
+import ErrorPage from "./ErrorPage.tsx";
 
 const Main = () => {
-    return(
+    return (
         <Routes>
-            <Route path={"/"} element={<Home/>}/>
-            <Route path={`/${navItems[0]}`} element={<Home/>}/>
-            <Route path={`/${navItems[1]}`} element={<AboutMe/>}/>
-            <Route path={`/${navItems[2]}`} element={<StarWars/>}/>
-            <Route path={`/${navItems[3]}`} element={<Contact/>}/>
+            {['/', `/${navItems[0].path}`, `/${navItems[0].path}/:heroId`].map(path => <Route key={path} path={path} element={<Home/>}/>)}
+            {/*<Route path={"/"} element={<Home/>}/>*/}
+            {/*<Route path={`/${navItems[0].path}`} element={<Home/>}/>*/}
+            {[`/${navItems[1].path}`,`/${navItems[1].path}/:heroId`].map(path =><Route path={path} key={path} element={<AboutMe/>}/>)}
+            {/*<Route path={`/${navItems[1].path}`} element={<AboutMe/>}/>*/}
+            {[`/${navItems[2].path}`,`/${navItems[2].path}/:heroId`].map(path =><Route path={path} key={path} element={<StarWars/>}/> ) }
+            {/*<Route path={`/${navItems[2].path}`} element={<StarWars/>}/>*/}
+            {[`/${navItems[3].path}`,`/${navItems[3].path}/:heroId`].map(path =><Route path={path} key={path} element={<Contact/>}/> ) }
+            {/*<Route path={`/${navItems[3].path}`} element={<Contact/>}/>*/}
+            <Route path={`*`} element={<ErrorPage/>}/>
         </Routes>
     )
 

@@ -1,7 +1,10 @@
 
-import {useEffect, useState} from "react";
-import {base_url, period_month} from "../utils/constants.ts";
+import {useContext, useEffect, useState} from "react";
+import {base_url, characters, defaultHero, period_month} from "../utils/constants.ts";
 import type {PlanetsStore} from "../utils/types";
+import {SwContext} from "../utils/context.ts";
+import {useParams} from "react-router-dom";
+import ErrorPage from "./ErrorPage.tsx";
 
 
 //  const [planets, setPlanets] Array<string>, (Array<string>) => void
@@ -10,6 +13,13 @@ const Contact = () => {
     const [planets, setPlanets] = useState<Array<string>>(['wait...']);
     const styleLabel = 'w-full text-danger'
     const styleInput = 'text-gray-600 w-full p-3 border border-gray-300 rounded-sm box-border mt-1.5 mb-4 resize-y'
+    const {changeHero} = useContext(SwContext);
+    const {heroId = defaultHero} = useParams();
+    useEffect(() => {
+        if (characters[heroId]) changeHero(heroId)
+        else return;
+    }, [heroId])
+
 
     //text-gray-600 w-full p-3 border border-gray-300 rounded-sm box-border mt-1.5 mb-4 resize-y
     async function fillPlanets(url: string) {
@@ -34,7 +44,8 @@ const Contact = () => {
     }, [])
 
 
-    return (
+    return characters[heroId] ?
+        (
         // className="container"
         <div className={`flex justify-center`}>
             <form className={`w-4/5 my-0 rounded-[5px] bg-form p-5 `} onSubmit={e => {
@@ -63,7 +74,7 @@ const Contact = () => {
                 </button>
             </form>
         </div>
-    )
+    ):<ErrorPage/>;
 }
 
 export default Contact;
