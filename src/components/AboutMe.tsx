@@ -1,28 +1,23 @@
-import {useEffect, useState} from "react";
-import {characters, defaultHero, period_month} from "../utils/constants.ts";
+import {type ComponentType, useEffect, useState} from "react";
+import {characters, period_month} from "../utils/constants.ts";
 import type {HeroInfo} from "../utils/types";
-import {useParams} from "react-router-dom";
 import {withErrorPage} from "../hoc/withErrorPage.tsx";
 
+interface AboutMeProps {
+    heroId?: string;
+}
 
-export const AboutMe = () => {
+export const AboutMe: ComponentType<AboutMeProps> = ({heroId}: AboutMeProps) => {
     const [hero, setHero] = useState<HeroInfo>();
-    const {heroId = defaultHero} = useParams();
-    // const {changeHero} = useContext<SWContextInterface>(SwContext);
+    // const {heroId = defaultHero} = useParams();
+
     useEffect(() => {
-        // if (!characters[heroId]) {
-        //     return;
-        // }
-        //
-        // changeHero(heroId);
-        const hero = JSON.parse(localStorage.getItem(heroId)!);
+        const hero = JSON.parse(localStorage.getItem(heroId!)!);
         if (hero && ((Date.now() - hero.timestamp) < period_month)) {
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setHero(hero.payload);
         } else {
-            fetch(characters[heroId].url)
-                // fetch(characters[heroId as keyof typeof characters].url)
-                // fetch(`${base_url}/v1/peoples/1`)
+            fetch(characters[heroId!].url)
                 .then(response => response.json())
                 .then(data => {
                     const info = {
@@ -45,23 +40,20 @@ export const AboutMe = () => {
 
     }, [heroId]) //working every time when the component is rendered, useEffect runing only once if [](an array of dependencies is empty and if not then everty time after any dependence(variable) from array is changed
 
-    // return characters[heroId]? (
-        return (
-            <>
-                {(!!hero) &&
-                    <div className='text-[2em] leading-normal text-justify ms-12'>
-                        {Object.keys(hero).map(key =>
-                            <p key={key}>
-                                <span className='text-[4rem] capitalize'>{key.replace('_', ' ')}:</span>
-                                {hero[key as keyof HeroInfo]}
-                            </p>)}
-                    </div>
-                }
-            </>
-        )
-        // : <ErrorPage/>;
+    return (
+        <>
+            {(!!hero) &&
+                <div className='text-[2em] leading-normal text-justify ms-12'>
+                    {Object.keys(hero).map(key =>
+                        <p key={key}>
+                            <span className='text-[4rem] capitalize'>{key.replace('_', ' ')}:</span>
+                            {hero[key as keyof HeroInfo]}
+                        </p>)}
+                </div>
+            }
+        </>
+    )
 }
-
 
 
 export default withErrorPage(AboutMe);

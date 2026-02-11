@@ -25,7 +25,7 @@ export const period_month = 30 * 24 * 60 * 60 * 1000;
 
 // export const base_url = 'http://sw-info-api.herokuapp.com';
 
-export const defaultHero = 'luke';
+export const defaultHero:string = 'luke';
 export const characters:CharactersInterface = {
     luke: {
         name: "Luke Skywalker",

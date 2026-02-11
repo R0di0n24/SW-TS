@@ -4,7 +4,8 @@ import ErrorPage from "../components/ErrorPage.tsx";
 import {SwContext} from "../utils/context.ts";
 import {useParams} from "react-router-dom";
 
-export const withErrorPage = (PageComponent: ComponentType) => (props:object) =>{
+
+export const withErrorPage = <T extends object>(PageComponent: ComponentType<T>) => (props:T) =>{
     const {changeHero} = useContext(SwContext);
     const {heroId = defaultHero} = useParams();
 
@@ -12,7 +13,7 @@ export const withErrorPage = (PageComponent: ComponentType) => (props:object) =>
         if (characters[heroId]) {changeHero(heroId);}
     }, [heroId, changeHero])
     return characters[heroId] ? (
-        <PageComponent {...props}/>
+        <PageComponent heroId={heroId} {...props}/>
     ) : <ErrorPage/>
 };
 
