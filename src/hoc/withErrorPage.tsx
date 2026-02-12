@@ -5,12 +5,13 @@ import {SwContext} from "../utils/context.ts";
 import {useParams} from "react-router-dom";
 
 
-export const withErrorPage = <T extends object>(PageComponent: ComponentType<T>) => (props:T) =>{
+export const withErrorPage = <T extends object>(PageComponent: ComponentType<T>) => (props: T) => {
     const {changeHero} = useContext(SwContext);
     const {heroId = defaultHero} = useParams();
 
-        useEffect(() => {
+    useEffect(() => {
         if (characters[heroId]) {changeHero(heroId);}
+        else {changeHero('Error');}
     }, [heroId, changeHero])
     return characters[heroId] ? (
         <PageComponent heroId={heroId} {...props}/>

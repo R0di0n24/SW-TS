@@ -9,10 +9,11 @@ const Header = () => {
     // let title = location.pathname.split('/')[2];
     // title = title? title.toUpperCase():'Lucke Skywalker';
     const {hero} = useContext(SwContext);
+      const title = characters[hero]? characters[hero].name: 'Error';
     return (
         <header className={`bg-gray rounded-t-2xl`}>
             <Navigation/>
-            <h1 className="text-center py-6 text-3xl">{characters[hero].name}</h1>
+            <h1 className="text-center py-6 text-3xl">{title}</h1>
         </header>
     );
 };
