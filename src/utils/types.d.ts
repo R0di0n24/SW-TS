@@ -1,6 +1,8 @@
 export interface SWContextInterface {
     hero: string,
     changeHero: (hero: string) => void,
+    isError: boolean,
+    setIsError: (isError: boolean) => void
     // [key: string]: unknown,
 }
 

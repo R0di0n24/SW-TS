@@ -8,8 +8,8 @@ const Header = () => {
     // const location = useLocation();
     // let title = location.pathname.split('/')[2];
     // title = title? title.toUpperCase():'Lucke Skywalker';
-    const {hero} = useContext(SwContext);
-      const title = characters[hero]? characters[hero].name: 'Error';
+    const {hero, isError} = useContext(SwContext);
+    const title = !isError? characters[hero].name : 'ERROR';
     return (
         <header className={`bg-gray rounded-t-2xl`}>
             <Navigation/>

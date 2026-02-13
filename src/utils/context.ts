@@ -4,5 +4,8 @@ import {defaultHero} from "./constants.ts";
 
 export const SwContext = createContext<SWContextInterface>({
     hero: defaultHero,
-    changeHero: (hero:string)=> console.log(hero)//page.length,
+    changeHero: (hero:string)=> console.log(hero),//page.length,
+    isError: false,
+    setIsError: (isError) => console.log(isError)
+
 });

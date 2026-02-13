@@ -6,13 +6,15 @@ import {useParams} from "react-router-dom";
 
 
 export const withErrorPage = <T extends object>(PageComponent: ComponentType<T>) => (props: T) => {
-    const {changeHero} = useContext(SwContext);
+    const {changeHero, setIsError} = useContext(SwContext);
     const {heroId = defaultHero} = useParams();
 
     useEffect(() => {
-        if (characters[heroId]) {changeHero(heroId);}
-        else {changeHero('Error');}
-    }, [heroId, changeHero])
+        if (characters[heroId]) {
+            setIsError(false)
+            changeHero(heroId);}
+        else {setIsError(true);}
+    }, [heroId])
     return characters[heroId] ? (
         <PageComponent heroId={heroId} {...props}/>
     ) : <ErrorPage/>
